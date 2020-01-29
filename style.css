@@ -1,4 +1,8 @@
 img {
-    width: 200px;
-    height: 200px;
+  width: 200px;
+  height: 200px;
+}
+
+.media-body {
+  flex: 0 0 40%;
 }
