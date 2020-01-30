@@ -18,7 +18,7 @@
     <!-- INICIO NAVBAR -->
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light m-3">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">Pokédex</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -95,42 +95,82 @@
             <option name="" id="">Pokemon Shape</option>
             <option name="" id="">Pokemon Species</option>
         </select> -->
-    <div class="media">
-      <img src="" class="mr-3" alt="pokemon-image" />
-      <div class="media-body">
-        <h5 class="mt-0" id="pokemon-name">POKEMON NAME</h5>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item" id="height">Cras justo odio</li>
-          <li class="list-group-item" id="weight">Cras justo odio</li>
-          <br />
-          <ul class="list-group list-group-flush">
-            <strong>Base Stats</strong>
-            <li class="list-group-item base-stats" id="speed">
-              Cras justo odio
-            </li>
-            <li class="list-group-item base-stats" id="special-defense">
-              Dapibus ac facilisis in
-            </li>
-            <li class="list-group-item base-stats" id="special-attack">
-              Morbi leo risus
-            </li>
-            <li class="list-group-item base-stats" id="defense">
-              Porta ac consectetur ac
-            </li>
-            <li class="list-group-item base-stats" id="attack">
-              Vestibulum at eros
-            </li>
-            <li class="list-group-item base-stats" id="hp">
-              Vestibulum at eros
-            </li>
-            <li class="list-group-item" id="base-experience">
-              Vestibulum at eros
-            </li>
-          </ul>
-        </ul>
+
+    <!-- <div class="d-flex p-2 justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only d-none">Loading...</span>
       </div>
+    </div> -->
+    <div class="d-flex p-2 justify-content-between">
+      <div class="media" id="pokedex">
+        <img src="" class="mr-3" alt="pokemon-image" />
+        <div class="media-body">
+          <h5 class="mt-0" id="pokemon-name">POKEMON NAME</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" id="height">Cras justo odio</li>
+            <li class="list-group-item" id="weight">Cras justo odio</li>
+            <br />
+            <ul class="list-group list-group-flush">
+              <strong>Base Stats</strong>
+              <li class="list-group-item base-stats" id="speed">
+                Cras justo odio
+              </li>
+              <li class="list-group-item base-stats" id="special-defense">
+                Dapibus ac facilisis in
+              </li>
+              <li class="list-group-item base-stats" id="special-attack">
+                Morbi leo risus
+              </li>
+              <li class="list-group-item base-stats" id="defense">
+                Porta ac consectetur ac
+              </li>
+              <li class="list-group-item base-stats" id="attack">
+                Vestibulum at eros
+              </li>
+              <li class="list-group-item base-stats" id="hp">
+                Vestibulum at eros
+              </li>
+              <li class="list-group-item" id="base-experience">
+                Vestibulum at eros
+              </li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+
+      <table class="table table-striped" id="pokemon-table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
+    <script src="pokemon-names.js"></script>
     <script src="pokedex.js"></script>
   </body>
 </html>

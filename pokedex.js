@@ -1,23 +1,3 @@
-start();
-
-listPokemons(); // List 20 pokemons by pokemon no., they will be listed on the right side of the screen.
-// BOOTSTRAP TABLE
-// You can change pages, these 20 pokemons are stored on localStorage. You can list pokemon after certain
-// Pokemon no.
-// IT IS DONE AUTOMATICALLY. You can click on any of them and it will be shown on the Pokedex.
-
-userSearch(); // In the input field, you can look for any pokemon you want. It should give you hints (dunno how).
-// BOOTSTRAP NAVBAR
-// Once you click the button, it is shown in the Pokedex.
-// If there's no pokemon named after that, an error should be displayed.
-// Maybe I could support habitat, color and type pokemon searches.
-
-// const $toggleableBaseStats = document.querySelector('#base-stats');
-
-// $toggleableBaseStats.addEventListener('click', (e) => {
-//     console.log('it works');
-// });
-
 const pokemonStats = {
     $pokemonImage: document.querySelector('img'),
     $pokemonName: document.querySelector('#pokemon-name'),
@@ -26,69 +6,58 @@ const pokemonStats = {
     $baseStats: Array.from(document.querySelectorAll('.base-stats')),
     $baseExperience: document.querySelector('#base-experience')
 }
+
 const $input = document.querySelector('#pokemon-tracker input');
 const $button = document.querySelector('#pokemon-tracker button');
 
-function userSearch() {
-    // const $select = document.querySelector('select');
-    // const $list = document.querySelector('ol');
+start();
 
-    // $select.addEventListener('change', (e) => {
-    //     return valueToLookFor = e.target.value.toLowerCase().split(' ').join('-');
-    // });
-    $button.addEventListener('click', () => {
-        const inputValue = $input.value.toLowerCase();
-        // const objectToSearchFor = `${valueToLookFor}-${inputValue}`;
-        const cachedObject = JSON.parse(localStorage.getItem(inputValue));
-        if (cachedObject) {
-            console.log('lo tengo en cache papá', cachedObject);
-            // pokemonStats.$pokemonImage.src = `https://pokeres.bastionbot.org/images/pokemon/${cachedObject.id}.png`
-            // pokemonStats.$pokemonName.textContent = capitalize(cachedObject.name);
-            // pokemonStats.$height.textContent = `Height: ${cachedObject.height}`;
-            // pokemonStats.$weight.textContent = `Weight: ${cachedObject.weight}`;
-            // pokemonStats.$baseStats.forEach((value, i) => {
-            //     pokemonStats.$baseStats[i].textContent =
-            //         `${capitalize(cachedObject.stats[i].stat.name)}: ${cachedObject.stats[i].base_stat}`;
-            // });
-            // pokemonStats.$baseExperience.textContent = `Base Experience: ${cachedObject.base_experience}`;
-            loadPokemonData(cachedObject);
-        } else {
-            fetch(`https://pokeapi.co/api/v2/pokemon/${inputValue}/`)
-                .then(response => response.json())
-                .then(responseJSON => {
-                    console.log('no estaba en cache, ya te lo traigo', responseJSON)
-                    localStorage.setItem(`${responseJSON.id}`, JSON.stringify(responseJSON));
-                    loadPokemonData(responseJSON);
-                });
-        }
-    });
-}
+// BOOTSTRAP TABLE
+// You can change pages, these 20 pokemons are stored on localStorage. You can list pokemon after certain
+// Pokemon no.
+// IT IS DONE AUTOMATICALLY. You can click on any of them and it will be shown on the Pokedex.
+
+// BOOTSTRAP NAVBAR
+// In the input field, you can look for any pokemon you want. It should give you hints (dunno how).
+// Once you click the button, it is shown in the Pokedex.
+// If there's no pokemon named after that, an error should be displayed.
+// Maybe I could support habitat, color and type pokemon searches.
 
 function start() {
-    const randomPokemonID = 10;
-    randomPokemon(randomPokemonID);
+    // randomPokemon();
     listPokemons();
 }
 
-function randomPokemon(randomID) {
-    lookForPokemon(randomID);
+$button.addEventListener('click', () => {
+    const inputValue = $input.value;
+    showPokemon(inputValue);
+});
+
+function randomPokemon() {
+    const randomID = Math.floor(Math.random() * 807);
+    const randomPokemonName = everyPokemonName[randomID];
+    showPokemon(randomPokemonName);
 }
 
-function lookForPokemon(userInput, pokemonID){
-    const userPokemonName = userInput.value.toLowerCase();
-    const alreadyInLocalStorage = JSON.parse(localStorage.getItem([pokemonID, userPokemonName]))
-    if (alreadyInLocalStorage) {
-        console.log('lo tengo en cache papá', cachedObject);
-        loadPokemonData(cachedObject);
+function showPokemon(pokemonToCheck) {
+    const pokemonToCheckLowerCase = pokemonToCheck.toLowerCase();
+    const cachedPokemon = JSON.parse(localStorage.getItem(pokemonToCheckLowerCase));
+    if (cachedPokemon) {
+        console.log('lo tengo en cache papá');
+        loadPokemonData(cachedPokemon);
     } else {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${inputValue}/`)
-            .then(response => response.json())
-            .then(responseJSON => {
-                console.log('no estaba en cache, ya te lo traigo', responseJSON)
-                localStorage.setItem(`${responseJSON.id}`, JSON.stringify(responseJSON));
-                loadPokemonData(responseJSON);
-            });
+        console.log('no estaba en cache, ya te lo traigo');
+        addToCacheAndLoad(pokemonToCheckLowerCase);
     }
+}
+
+function addToCacheAndLoad(pokemonQuery) {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonQuery}/`)
+        .then(response => response.json())
+        .then(responseJSON => {
+            localStorage.setItem(`${responseJSON.name}`, JSON.stringify(responseJSON));
+            loadPokemonData(responseJSON);
+        });
 }
 
 function loadPokemonData(pokeApiResponse) {
@@ -104,7 +73,7 @@ function loadPokemonData(pokeApiResponse) {
 }
 
 function listPokemons() {
-
+    // List 20 pokemons by pokemon no., they will be listed on the right side of the screen.
 }
 
 function capitalize(string) { return string.charAt(0).toUpperCase() + string.slice(1); }

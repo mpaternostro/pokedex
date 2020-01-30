@@ -1,8 +1,16 @@
+body {
+  height: 95vh;
+}
+
 img {
   width: 200px;
   height: 200px;
 }
 
-.media-body {
-  flex: 0 0 40%;
+#pokedex {
+  flex: 1;
+}
+
+#pokemon-table {
+  flex: 1;
 }
