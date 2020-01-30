@@ -6,7 +6,7 @@ listPokemons(); // List 20 pokemons by pokemon no., they will be listed on the r
 // Pokemon no.
 // IT IS DONE AUTOMATICALLY. You can click on any of them and it will be shown on the Pokedex.
 
-search(); // In the input field, you can look for any pokemon you want. It should give you hints (dunno how).
+userSearch(); // In the input field, you can look for any pokemon you want. It should give you hints (dunno how).
 // BOOTSTRAP NAVBAR
 // Once you click the button, it is shown in the Pokedex.
 // If there's no pokemon named after that, an error should be displayed.
@@ -26,11 +26,11 @@ const pokemonStats = {
     $baseStats: Array.from(document.querySelectorAll('.base-stats')),
     $baseExperience: document.querySelector('#base-experience')
 }
+const $input = document.querySelector('#pokemon-tracker input');
+const $button = document.querySelector('#pokemon-tracker button');
 
-function search() {
+function userSearch() {
     // const $select = document.querySelector('select');
-    const $input = document.querySelector('#pokemon-tracker input');
-    const $button = document.querySelector('#pokemon-tracker button');
     // const $list = document.querySelector('ol');
 
     // $select.addEventListener('change', (e) => {
@@ -70,8 +70,25 @@ function start() {
     listPokemons();
 }
 
-function randomPokemon() {
+function randomPokemon(randomID) {
+    lookForPokemon(randomID);
+}
 
+function lookForPokemon(userInput, pokemonID){
+    const userPokemonName = userInput.value.toLowerCase();
+    const alreadyInLocalStorage = JSON.parse(localStorage.getItem([pokemonID, userPokemonName]))
+    if (alreadyInLocalStorage) {
+        console.log('lo tengo en cache papá', cachedObject);
+        loadPokemonData(cachedObject);
+    } else {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${inputValue}/`)
+            .then(response => response.json())
+            .then(responseJSON => {
+                console.log('no estaba en cache, ya te lo traigo', responseJSON)
+                localStorage.setItem(`${responseJSON.id}`, JSON.stringify(responseJSON));
+                loadPokemonData(responseJSON);
+            });
+    }
 }
 
 function loadPokemonData(pokeApiResponse) {
