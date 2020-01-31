@@ -13,7 +13,7 @@ const $button = document.querySelector('#pokemon-tracker button');
 start();
 
 // BOOTSTRAP TABLE
-// You can change pages, these 20 pokemons are stored on localStorage. You can list pokemon after certain
+// You can change pages, these 10 pokemons are stored on localStorage. You can list pokemon after certain
 // Pokemon no.
 // IT IS DONE AUTOMATICALLY. You can click on any of them and it will be shown on the Pokedex.
 
@@ -28,9 +28,10 @@ function start() {
     listPokemons();
 }
 
-$button.addEventListener('click', () => {
+$button.addEventListener('click', (valorEvento) => {
     const inputValue = $input.value;
     showPokemon(inputValue);
+    valorEvento.preventDefault();
 });
 
 function randomPokemon() {
@@ -43,24 +44,31 @@ function showPokemon(pokemonToCheck) {
     const pokemonToCheckLowerCase = pokemonToCheck.toLowerCase();
     const cachedPokemon = JSON.parse(localStorage.getItem(pokemonToCheckLowerCase));
     if (cachedPokemon) {
-        console.log('lo tengo en cache papá');
-        loadPokemonData(cachedPokemon);
+        loadPokedex(cachedPokemon);
     } else {
-        console.log('no estaba en cache, ya te lo traigo');
-        addToCacheAndLoad(pokemonToCheckLowerCase);
+        addToCacheLoadPokedex(pokemonToCheckLowerCase);
     }
 }
 
-function addToCacheAndLoad(pokemonQuery) {
+function addToCacheLoadPokedex(pokemonQuery) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonQuery}/`)
         .then(response => response.json())
         .then(responseJSON => {
             localStorage.setItem(`${responseJSON.name}`, JSON.stringify(responseJSON));
-            loadPokemonData(responseJSON);
+            loadPokedex(responseJSON);
         });
 }
 
-function loadPokemonData(pokeApiResponse) {
+function addToCacheLoadTable(pokemonID) {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonID}/`)
+        .then(response => response.json())
+        .then(responseJSON => {
+            localStorage.setItem(`${responseJSON.name}`, JSON.stringify(responseJSON));
+            loadTable(responseJSON);
+        });
+}
+
+function loadPokedex(pokeApiResponse) {
     pokemonStats.$pokemonImage.src = `https://pokeres.bastionbot.org/images/pokemon/${pokeApiResponse.id}.png`
     pokemonStats.$pokemonName.textContent = capitalize(pokeApiResponse.name);
     pokemonStats.$height.textContent = `Height: ${pokeApiResponse.height}`;
@@ -72,8 +80,15 @@ function loadPokemonData(pokeApiResponse) {
     pokemonStats.$baseExperience.textContent = `Base Experience: ${pokeApiResponse.base_experience}`;
 }
 
+function loadTable(pokemonData) {
+    
+}
+
 function listPokemons() {
-    // List 20 pokemons by pokemon no., they will be listed on the right side of the screen.
+    const $listOfPokemons = document.querySelector("#pokemon-table").children
+    $listOfPokemons.forEach((value, i) => {
+        $listOfPokemons[i].children[i] = addToCacheLoadTable(i + 1);
+    });
 }
 
 function capitalize(string) { return string.charAt(0).toUpperCase() + string.slice(1); }
