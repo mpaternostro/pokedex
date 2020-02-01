@@ -59,12 +59,13 @@ function addToCacheLoadPokedex(pokemonQuery) {
         });
 }
 
-function addToCacheLoadTable(pokemonID) {
+function addToCacheLoadTable(pokemonRow) {
+    const pokemonID = pokemonRow.children[1].textContent;
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonID}/`)
         .then(response => response.json())
         .then(responseJSON => {
             localStorage.setItem(`${responseJSON.name}`, JSON.stringify(responseJSON));
-            loadTable(responseJSON);
+            loadTable(pokemonRow, responseJSON);
         });
 }
 
@@ -80,14 +81,15 @@ function loadPokedex(pokeApiResponse) {
     pokemonStats.$baseExperience.textContent = `Base Experience: ${pokeApiResponse.base_experience}`;
 }
 
-function loadTable(pokemonData) {
-    
+function loadTable(pokemonData, pokeApiResponse) {
+    const pokemonSprite = pokemonData.children[0];
+    pokemonSprite.
 }
 
 function listPokemons() {
-    const $listOfPokemons = document.querySelector("#pokemon-table").children
+    const $listOfPokemons = Array.from(document.querySelector("#pokemon-table").children);
     $listOfPokemons.forEach((value, i) => {
-        $listOfPokemons[i].children[i] = addToCacheLoadTable(i + 1);
+        addToCacheLoadTable($listOfPokemons[i]);
     });
 }
 
