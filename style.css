@@ -2,9 +2,14 @@ body {
   height: 95vh;
 }
 
-img {
+img#pokedex-image {
   width: 200px;
   height: 200px;
+}
+
+.pokemon-sprite img {
+  width: 50px;
+  height: 50px;
 }
 
 #pokedex {
@@ -20,5 +25,15 @@ img {
 }
 
 .table {
+  margin-bottom: 0px;
+}
+
+#table {
+  flex: 1;
   margin: 10px;
+  font-size: 14px;
+}
+
+tbody#pokemon-table tr td.pokemon-sprite {
+  padding: 0px;
 }

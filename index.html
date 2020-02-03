@@ -1,47 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="style.css" />
-    <title>Pokédex</title>
-  </head>
 
-  <body>
-    <!-- INICIO NAVBAR -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Pokédex</title>
+</head>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light m-3">
-      <a class="navbar-brand" href="#">Pokédex</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+<body>
+  <!-- INICIO NAVBAR -->
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#"
-              >Home <span class="sr-only">(current)</span></a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Random</a>
-          </li>
-          <!-- <li class="nav-item dropdown">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light m-3">
+    <a class="navbar-brand" href="#">Pokédex</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Random</a>
+        </li>
+        <!-- <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
               href="#"
@@ -63,81 +51,61 @@
           <li class="nav-item">
             <a class="nav-link disabled" href="#">Disabled</a>
           </li> -->
-        </ul>
-        <form class="form-inline my-2 my-lg-0" id="pokemon-tracker">
-          <input
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-            Search
-          </button>
-        </form>
-      </div>
-    </nav>
+      </ul>
+      <form class="form-inline my-2 my-lg-0" id="pokemon-tracker">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          Search
+        </button>
+      </form>
+    </div>
+  </nav>
 
-    <!-- FIN NAVBAR -->
+  <!-- FIN NAVBAR -->
 
-    <!-- <select value="">
-    <option name="" id="" selected disabled>Choose</option>
-    <option name="" id="">Ability</option>
-    <option name="" id="">Stat</option>
-    <option name="" id="">Type</option>
-    <option name="" id="">Egg Groups</option>
-    <option name="" id="">Growth Rates</option>
-    <option name="" id="">Natures</option>
-    <option name="" id="">Pokemon</option>
-            <option name="" id="">Pokemon Color</option>
-            <option name="" id="">Pokemon Form</option>
-            <option name="" id="">Pokemon Habitat</option>
-            <option name="" id="">Pokemon Shape</option>
-            <option name="" id="">Pokemon Species</option>
-        </select> -->
-
-    <!-- <div class="d-flex p-2 justify-content-center">
+  <!-- <div class="d-flex p-2 justify-content-center">
       <div class="spinner-border" role="status">
         <span class="sr-only d-none">Loading...</span>
       </div>
     </div> -->
-    <div class="d-flex p-2 justify-content-between">
-      <div class="media" id="pokedex">
-        <img src="" class="mr-3" id='pokedex-image' alt="pokemon-image" />
-        <div class="media-body">
-          <h5 class="mt-0" id="pokemon-name">POKEMON NAME</h5>
+  <div class="d-flex p-2 justify-content-between">
+    <div class="media" id="pokedex">
+      <img src="" class="mr-3" id='pokedex-image' alt="pokemon-image" />
+      <div class="media-body">
+        <h5 class="mt-0" id="pokemon-name">POKEMON NAME</h5>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" id="height">Cras justo odio</li>
+          <li class="list-group-item" id="weight">Cras justo odio</li>
+          <li class="list-group-item" id="type">Cras justo odio</li>
+          <br />
           <ul class="list-group list-group-flush">
-            <li class="list-group-item" id="height">Cras justo odio</li>
-            <li class="list-group-item" id="weight">Cras justo odio</li>
-            <br />
-            <ul class="list-group list-group-flush">
-              <strong>Base Stats</strong>
-              <li class="list-group-item base-stats" id="speed">
-                Cras justo odio
-              </li>
-              <li class="list-group-item base-stats" id="special-defense">
-                Dapibus ac facilisis in
-              </li>
-              <li class="list-group-item base-stats" id="special-attack">
-                Morbi leo risus
-              </li>
-              <li class="list-group-item base-stats" id="defense">
-                Porta ac consectetur ac
-              </li>
-              <li class="list-group-item base-stats" id="attack">
-                Vestibulum at eros
-              </li>
-              <li class="list-group-item base-stats" id="hp">
-                Vestibulum at eros
-              </li>
-              <li class="list-group-item" id="base-experience">
-                Vestibulum at eros
-              </li>
-            </ul>
+            <strong>Base Stats</strong>
+            <li class="list-group-item base-stats" id="speed">
+              Cras justo odio
+            </li>
+            <li class="list-group-item base-stats" id="special-defense">
+              Dapibus ac facilisis in
+            </li>
+            <li class="list-group-item base-stats" id="special-attack">
+              Morbi leo risus
+            </li>
+            <li class="list-group-item base-stats" id="defense">
+              Porta ac consectetur ac
+            </li>
+            <li class="list-group-item base-stats" id="attack">
+              Vestibulum at eros
+            </li>
+            <li class="list-group-item base-stats" id="hp">
+              Vestibulum at eros
+            </li>
+            <li class="list-group-item" id="base-experience">
+              Vestibulum at eros
+            </li>
           </ul>
-        </div>
+        </ul>
       </div>
-
+    </div>
+    <div id="table" class="d-flex flex-column">
       <table class="table table-striped">
         <thead>
           <tr>
@@ -151,15 +119,15 @@
         </thead>
         <tbody id="pokemon-table">
           <tr>
-            <img class="pokemon-sprite" src>Mark</img>
+            <td class="pokemon-sprite text-center"><img src="" alt="table-sprite"></td>
             <th scope="row" class="pokemon-number">1</th>
-            <td class='pokemon-name'>Otto</td class='pokemon-name'>
-            <td class="pokemon-hp">@mdo</td class="pokemon-hp">
-            <td class="pokemon-atk">@mdo</td class="pokemon-atk">
-            <td class="pokemon-def">@mdo</td class="pokemon-def">
+            <td class='pokemon-name'>Otto</td>
+            <td class="pokemon-hp">@mdo</td>
+            <td class="pokemon-atk">@mdo</td>
+            <td class="pokemon-def">@mdo</td>
           </tr>
           <tr>
-            <td class="pokemon-sprite">Jacob</td>
+            <td class="pokemon-sprite text-center"><img src="" alt="table-sprite"></td>
             <th scope="row" class="pokemon-number">2</th>
             <td class='pokemon-name'>Thornton</td>
             <td class="pokemon-hp">@fat</td>
@@ -167,7 +135,7 @@
             <td class="pokemon-def">@fat</td>
           </tr>
           <tr>
-            <td class="pokemon-sprite">Larry</td>
+            <td class="pokemon-sprite text-center"><img src="" alt="table-sprite"></td>
             <th scope="row" class="pokemon-number">3</th>
             <td class='pokemon-name'>the Bird</td>
             <td class="pokemon-hp">@twitter</td>
@@ -175,7 +143,7 @@
             <td class="pokemon-def">@twitter</td>
           </tr>
           <tr>
-            <td class="pokemon-sprite">Larry</td>
+            <td class="pokemon-sprite text-center"><img src="" alt="table-sprite"></td>
             <th scope="row" class="pokemon-number">4</th>
             <td class='pokemon-name'>the Bird</td>
             <td class="pokemon-hp">@twitter</td>
@@ -183,7 +151,7 @@
             <td class="pokemon-def">@twitter</td>
           </tr>
           <tr>
-            <td class="pokemon-sprite">Larry</td>
+            <td class="pokemon-sprite text-center"><img src="" alt="table-sprite"></td>
             <th scope="row" class="pokemon-number">5</th>
             <td class='pokemon-name'>the Bird</td>
             <td class="pokemon-hp">@twitter</td>
@@ -191,7 +159,7 @@
             <td class="pokemon-def">@twitter</td>
           </tr>
           <tr>
-            <td class="pokemon-sprite">Larry</td>
+            <td class="pokemon-sprite text-center"><img src="" alt="table-sprite"></td>
             <th scope="row" class="pokemon-number">6</th>
             <td class='pokemon-name'>the Bird</td>
             <td class="pokemon-hp">@twitter</td>
@@ -199,7 +167,7 @@
             <td class="pokemon-def">@twitter</td>
           </tr>
           <tr>
-            <td class="pokemon-sprite">Larry</td>
+            <td class="pokemon-sprite text-center"><img src="" alt="table-sprite"></td>
             <th scope="row" class="pokemon-number">7</th>
             <td class='pokemon-name'>the Bird</td>
             <td class="pokemon-hp">@twitter</td>
@@ -207,7 +175,7 @@
             <td class="pokemon-def">@twitter</td>
           </tr>
           <tr>
-            <td class="pokemon-sprite">Larry</td>
+            <td class="pokemon-sprite text-center"><img src="" alt="table-sprite"></td>
             <th scope="row" class="pokemon-number">8</th>
             <td class='pokemon-name'>the Bird</td>
             <td class="pokemon-hp">@twitter</td>
@@ -215,7 +183,7 @@
             <td class="pokemon-def">@twitter</td>
           </tr>
           <tr>
-            <td class="pokemon-sprite">Larry</td>
+            <td class="pokemon-sprite text-center"><img src="" alt="table-sprite"></td>
             <th scope="row" class="pokemon-number">9</th>
             <td class='pokemon-name'>the Bird</td>
             <td class="pokemon-hp">@twitter</td>
@@ -223,7 +191,7 @@
             <td class="pokemon-def">@twitter</td>
           </tr>
           <tr>
-            <td class="pokemon-sprite">Larry</td>
+            <td class="pokemon-sprite text-center"><img src="" alt="table-sprite"></td>
             <th scope="row" class="pokemon-number">10</th>
             <td class='pokemon-name'>the Bird</td>
             <td class="pokemon-hp">@twitter</td>
@@ -232,9 +200,22 @@
           </tr>
         </tbody>
       </table>
+      <nav aria-label="table-navigation" class="align-self-center">
+        <ul class="pagination">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+      </nav>
     </div>
+  </div>
 
-    <script src="pokemon-names.js"></script>
-    <script src="pokedex.js"></script>
-  </body>
+  <script src="pokemon-names.js"></script>
+  <script src="pokedex.js"></script>
+</body>
+
 </html>
