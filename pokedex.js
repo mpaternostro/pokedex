@@ -27,41 +27,126 @@ $button.addEventListener('click', valorEvento => {
 });
 
 $pagination.addEventListener('click', valorEvento => {
-    const $selectedElement = valorEvento.target;
+    const $selectedElement = valorEvento.target.parentElement;
     const $previous = $pagination.children[0];
     const $next = $pagination.children[4];
-    if ($selectedElement.classList.contains('disabled') || $selectedElement.parentElement.classList.contains('active')) {
+
+    if (checkInvalidSelection($selectedElement) === true) {
         return;
     }
+    // esta funcion se fija si clickeaste en el boton en gris o si clickeaste en el que ya está activo
+    // en cualquiera de esos casos, detiene la ejecución
+
     if ($selectedElement === $previous) {
-        const actualPageNumber = Number($actualPage.textContent) - 1;
-        if (actualPageNumber >= 2 && notInTheMiddle($actualPage)) {
-            placeInTheMiddle($actualPage);
-            listPokemons((actualPageNumber - 1) * 10 + 1);
-        }
+        previous();
+        return;
     }
     if ($selectedElement === $next) {
-        const actualPageNumber = Number($actualPage.textContent) + 1;
+        next();
+        return;
     }
-    $actualPage.classList.remove('active');
-    $actualPage = $selectedElement.parentElement;
-    console.log($actualPage);
-    $actualPage.classList.add('active');
-    const actualPageNumber = Number($actualPage.textContent); // from now on, this is the new page number
-    if (actualPageNumber >= 2 && notInTheMiddle($actualPage)) {
-        placeInTheMiddle($actualPage);
-    }
-    actualPageNumber !== 1 ? $previous.classList.remove('disabled') : $previous.classList.add('disabled');
-    listPokemons((actualPageNumber - 1) * 10 + 1);
+    pageSelector($selectedElement);
+
+    // ESTO YA SE HACE EN previous() y next()
+    // if ($selectedElement === $previous) {
+    //     const actualPageNumber = Number($actualPage.textContent) - 1;
+    //     if (actualPageNumber >= 2 && notInTheMiddle($actualPage)) {
+    //         placeInTheMiddle($actualPage);
+    //         listPokemons((actualPageNumber - 1) * 10 + 1);
+    //     }
+    // }
+    // if ($selectedElement === $next) {
+    //     const actualPageNumber = Number($actualPage.textContent) + 1;
+    // }
+
+    // ESTO YA SE HACE EN CADA FUNCION
+    // $actualPage.classList.remove('active');
+    // $actualPage = $selectedElement.parentElement;
+    // $actualPage.classList.add('active');
+
+    // ESTO YA SE HACE EN CADA FUNCION
+    // const actualPageNumber = Number($actualPage.textContent); // from now on, this is the new page number
+    // if (actualPageNumber >= 2 && notInTheMiddle($actualPage)) {
+    //     placeInTheMiddle($actualPage);
+    // }
+
+    // ESTO YA SE HACE EN CADA FUNCION
+    // actualPageNumber !== 1 ? $previous.classList.remove('disabled') : $previous.classList.add('disabled');
+
+    // ESTO YA SE HACE EN CADA FUNCION
+    // listPokemons((actualPageNumber - 1) * 10 + 1);
 });
 
-function placeInTheMiddle(page) {
-    const pageNumber = Number(page.textContent);
+function checkInvalidSelection(userSelection) {
+    if (userSelection.children[0].classList.contains('disabled') || userSelection.classList.contains('active')) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function previous() {
+    const newActualPage = $actualPage.previousElementSibling;
+    newActualPage.children[0].textContent = Number($actualPage.textContent) - 1;
+    showAsActive(newActualPage);
+    // le saca el active a la pagina anterior y se lo pone a la nueva pagina
+    updateActualPage(newActualPage);
+    // actualiza la variable global $actualPage. A PARTIR DE ACA $newActualPage = $actualPage
+    toggleDisabled();
+    // se fija si llegaste a la página 1 (le pone el disabled), o si te fuiste de la página 1 (le saca el disabled)
+    placeInTheMiddle();
+    // pone la nueva pagina en el medio (si es necesario)
+    listPokemons();
+    // lista los 10 siguientes pokemones
+}
+
+function next() {
+    const newActualPage = $actualPage.nextElementSibling;
+    newActualPage.children[0].textContent = Number($actualPage.textContent) + 1;
+    showAsActive(newActualPage);
+    // le saca el active a la pagina anterior y se lo pone a la nueva pagina
+    updateActualPage(newActualPage);
+    // actualiza la variable global $actualPage. A PARTIR DE ACA $newActualPage = $actualPage
+    toggleDisabled();
+    // se fija si llegaste a la página 1 (le pone el disabled), o si te fuiste de la página 1 (le saca el disabled)
+    placeInTheMiddle();
+    // pone la nueva pagina en el medio (si es necesario)
+    listPokemons();
+    // lista los 10 siguientes pokemones
+}
+
+function pageSelector() {
+    toggleDisabled();
+    showAsActive();
+    placeInTheMiddle();
+    listPokemons();
+}
+
+function toggleDisabled() {
+    const $previous = $pagination.children[0];
+    $actualPage.textContent === '1' ? $previous.classList.add('disabled') : $previous.classList.remove('disabled');
+}
+
+function updateActualPage(newActualPage) {
+    $actualPage = newActualPage;
+}
+
+function showAsActive(newActualpage) {
+    $actualPage.classList.remove('active');
+    newActualpage.classList.add('active');
+}
+
+function placeInTheMiddle() {
+    if ($actualPage.textContent === '1' || $actualPage === $pagination.children[2]) {
+        console.log('no hizo falta centrarlo');
+        return;
+    }
+    const pageNumber = Number($actualPage.textContent);
     const $previous = $pagination.children[0];
     const $leftPage = $pagination.children[1];
     const $rightPage = $pagination.children[3];
     const $next = $pagination.children[4];
-    if (page === $rightPage) { // if you selected the page on the right
+    if ($actualPage === $rightPage) { // if you selected the page on the right
         $leftPage.children[0].textContent = pageNumber + 1;
         $pagination.insertAdjacentElement('beforeend', $leftPage);
         $pagination.insertAdjacentElement('beforeend', $next);
@@ -91,9 +176,11 @@ function randomPokemon() {
     showPokemon(randomPokemonName);
 }
 
-function listPokemons(firstID) {
-    const $listOfPokemons = Array.from(document.querySelector("#pokemon-table").children);
+function listPokemons(pageNumber) {
     const $pokemonNumbers = Array.from(document.querySelectorAll(".pokemon-number"));
+    const $listOfPokemons = Array.from(document.querySelector("#pokemon-table").children);
+    const actualPageNumber = Number($actualPage.textContent);
+    const firstID = (actualPageNumber - 1) * 10 + 1;
     $pokemonNumbers.forEach((value, i) => {
         value.textContent = firstID + i;
     });
