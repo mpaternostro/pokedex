@@ -17,8 +17,6 @@ let $actualPage = $pagination.children[1];
 start();
 
 // BOOTSTRAP NAVBAR
-// In the input field, you can look for any pokemon you want. It should give you hints (dunno how).
-// Once you click the button, it is shown in the Pokedex.
 // If there's no pokemon named after that, an error should be displayed.
 
 $homeButton.addEventListener('click', () => {
@@ -31,7 +29,9 @@ $randomButton.addEventListener('click', () => {
 
 $searchButton.addEventListener('click', valorEvento => {
     const inputValue = $searchInput.value;
-    showPokemon(inputValue);
+    if (validatePokemon(inputValue) === true) {
+        showPokemon(inputValue);
+    }
     valorEvento.preventDefault();
 });
 
@@ -157,6 +157,14 @@ function notInTheMiddle(page) {
     }
 }
 
+function validatePokemon(pokemon) {
+    if (everyPokemonName.includes(capitalize(pokemon.toLowerCase()))) {
+        toggleInputError('hide');
+        return true;
+    } else {
+        toggleInputError('show');
+    }
+}
 
 function showPokemon(pokemonToCheck) {
     const pokemonToCheckLowerCase = pokemonToCheck.toLowerCase();
@@ -165,12 +173,14 @@ function showPokemon(pokemonToCheck) {
 }
 
 function addToCacheLoadPokedex(pokemonQuery) {
+    toggleSpinner('hide', 'pokedex');
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonQuery}/`)
         .then(response => response.json())
         .then(responseJSON => {
             localStorage.setItem(`${responseJSON.name}`, setNecessaryItems(responseJSON));
             loadPokedex(responseJSON);
-        });
+        })
+        .catch(error => console.error("LA API NO ENCONTRÓ ESTE POKEMON", error));
 }
 
 function addToCacheLoadTable(pokemonRow) {
@@ -180,7 +190,8 @@ function addToCacheLoadTable(pokemonRow) {
         .then(responseJSON => {
             localStorage.setItem(`${responseJSON.name}`, setNecessaryItems(responseJSON));
             loadTable(pokemonRow, responseJSON);
-        });
+        })
+        .catch(error => console.error("LA API NO ENCONTRÓ ESTE POKEMON", error));
 }
 
 function setNecessaryItems(pokeApiResponse) {
@@ -192,22 +203,27 @@ function setNecessaryItems(pokeApiResponse) {
         types: pokeApiResponse.types,
         stats: pokeApiResponse.stats,
         base_experience: pokeApiResponse.base_experience,
-        sprites: pokeApiResponse.sprites
+        sprites: pokeApiResponse.sprites.front_default
     }
     return JSON.stringify(necessaryItems);
 }
 
 function loadPokedex(pokeInfoObject) {
-    pokemonStats.$pokemonImage.src = `https://pokeres.bastionbot.org/images/pokemon/${pokeInfoObject.id}.png`
-    pokemonStats.$pokemonName.textContent = `${capitalize(pokeInfoObject.name)} [${[pokeInfoObject.id]}]`;
-    pokemonStats.$height.textContent = `Height: ${pokeInfoObject.height / 10} m`;
-    pokemonStats.$weight.textContent = `Weight: ${pokeInfoObject.weight / 10} kg`;
-    pokemonStats.$type.textContent = `Type: ${capitalize(pokeInfoObject.types[0].type.name)}
-                            ${pokeInfoObject.types[1] ? capitalize(pokeInfoObject.types[1].type.name) : ''}`;
-    pokemonStats.$baseStats.forEach((value, i) => {
-        value.textContent = `${capitalize(pokeInfoObject.stats[i].stat.name)}: ${pokeInfoObject.stats[i].base_stat}`;
-    });
-    pokemonStats.$baseExperience.textContent = `Base Experience: ${pokeInfoObject.base_experience}`;
+    waitImageLoad(`https://pokeres.bastionbot.org/images/pokemon/${pokeInfoObject.id}.png`)
+        .then(image => {
+            pokemonStats.$pokemonImage.src = image.src;
+            pokemonStats.$pokemonName.textContent = `${capitalize(pokeInfoObject.name)} [${[pokeInfoObject.id]}]`;
+            pokemonStats.$height.textContent = `Height: ${pokeInfoObject.height / 10} m`;
+            pokemonStats.$weight.textContent = `Weight: ${pokeInfoObject.weight / 10} kg`;
+            pokemonStats.$type.textContent = `Type: ${capitalize(pokeInfoObject.types[0].type.name)}
+                ${pokeInfoObject.types[1] ? capitalize(pokeInfoObject.types[1].type.name) : ''}`;
+            pokemonStats.$baseStats.forEach((value, i) => {
+                value.textContent = `${capitalize(pokeInfoObject.stats[i].stat.name)}: ${pokeInfoObject.stats[i].base_stat}`;
+            });
+            pokemonStats.$baseExperience.textContent = `Base Experience: ${pokeInfoObject.base_experience}`;
+            toggleSpinner('show', 'pokedex');
+        })
+        .catch(error => console.error("NO PUDE CARGAR LA IMAGEN", error));
 }
 
 function loadTable(pokemonTableData, pokeInfoObject) {
@@ -216,11 +232,54 @@ function loadTable(pokemonTableData, pokeInfoObject) {
     const pokemonHP = pokemonTableData.children[3];
     const pokemonATK = pokemonTableData.children[4];
     const pokemonDEF = pokemonTableData.children[5];
-    pokemonSprite.src = `${pokeInfoObject.sprites.front_default}`;
+    if (pokeInfoObject.sprites.front_default) {
+        pokemonSprite.src = `${pokeInfoObject.sprites.front_default}`;
+    } else {
+        pokemonSprite.src = `${pokeInfoObject.sprites}`;
+    }
     pokemonName.textContent = `${capitalize(pokeInfoObject.name)}`;
     pokemonHP.textContent = `${pokeInfoObject.stats[5].base_stat}`;
     pokemonATK.textContent = `${pokeInfoObject.stats[4].base_stat}`;
     pokemonDEF.textContent = `${pokeInfoObject.stats[3].base_stat}`;
+}
+
+function waitImageLoad(URL) {
+    toggleSpinner('hide', 'pokedex');
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.addEventListener("load", () => resolve(img));
+        img.addEventListener("error", err => reject(err));
+        img.src = URL;
+    });
+}
+
+function toggleSpinner(behavior, relative) {
+    const $spinner = document.querySelector(`#spinner-${relative}`);
+    const $relative = document.querySelector(`#${relative}`);
+    if (behavior === 'show') {
+        $spinner.classList.remove('d-flex');
+        $spinner.classList.add('d-none');
+        $relative.classList.remove('d-none');
+        $relative.classList.add('d-flex');
+    }
+    if (behavior === 'hide') {
+        $relative.classList.remove('d-flex');
+        $relative.classList.add('d-none');
+        $spinner.classList.remove('d-none');
+        $spinner.classList.add('d-flex');
+    }
+}
+
+function toggleInputError(behavior) {
+    const $nameError = document.querySelector('#name-error');
+    if (behavior === 'hide') {
+        $nameError.classList.add('d-none');
+        $searchInput.classList.remove('alert-danger');
+    }
+    if (behavior === 'show') {
+        $nameError.classList.remove('d-none');
+        $searchInput.classList.add('alert-danger');
+    }
 }
 
 function capitalize(string) { return string.charAt(0).toUpperCase() + string.slice(1); }
