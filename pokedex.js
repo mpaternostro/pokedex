@@ -1,6 +1,7 @@
 const pokemonStats = {
     $pokemonImage: document.querySelector('img'),
     $pokemonName: document.querySelector('#pokemon-name'),
+    $pokemonID: document.querySelector('#pokemon-id'),
     $height: document.querySelector('#height'),
     $weight: document.querySelector('#weight'),
     $type: document.querySelector('#type'),
@@ -13,11 +14,9 @@ const $randomButton = document.querySelector('#random-button');
 const $searchInput = document.querySelector('#pokemon-tracker input');
 const $searchButton = document.querySelector('#pokemon-tracker button');
 const $pagination = document.querySelector('.pagination');
+const $pokemonTable = document.querySelector('#pokemon-table');
 let $actualPage = $pagination.children[1];
 start();
-
-// BOOTSTRAP NAVBAR
-// If there's no pokemon named after that, an error should be displayed.
 
 $homeButton.addEventListener('click', () => {
     window.location.reload();
@@ -35,11 +34,16 @@ $searchButton.addEventListener('click', valorEvento => {
     valorEvento.preventDefault();
 });
 
+Array.from($pokemonTable.children).forEach(value => {
+    value.addEventListener('click', row => {
+        showPokemon(value.children[2].textContent);
+    });
+});
+
 $pagination.addEventListener('click', valorEvento => {
     const $selectedElement = valorEvento.target.parentElement;
     const $previous = $pagination.children[0];
     const $next = $pagination.children[4];
-
     if (checkInvalidSelection($selectedElement) === true) {
         return;
     }
@@ -169,7 +173,15 @@ function validatePokemon(pokemon) {
 function showPokemon(pokemonToCheck) {
     const pokemonToCheckLowerCase = pokemonToCheck.toLowerCase();
     const cachedPokemon = JSON.parse(localStorage.getItem(pokemonToCheckLowerCase));
-    cachedPokemon ? loadPokedex(cachedPokemon) : addToCacheLoadPokedex(pokemonToCheckLowerCase);
+    const actualPokemon = pokemonStats.$pokemonName.textContent.toLowerCase();
+    if (cachedPokemon) {
+        if (pokemonToCheckLowerCase === actualPokemon) {
+            return;
+        }
+        loadPokedex(cachedPokemon)
+    } else {
+        addToCacheLoadPokedex(pokemonToCheckLowerCase);
+    }
 }
 
 function addToCacheLoadPokedex(pokemonQuery) {
@@ -212,7 +224,8 @@ function loadPokedex(pokeInfoObject) {
     waitImageLoad(`https://pokeres.bastionbot.org/images/pokemon/${pokeInfoObject.id}.png`)
         .then(image => {
             pokemonStats.$pokemonImage.src = image.src;
-            pokemonStats.$pokemonName.textContent = `${capitalize(pokeInfoObject.name)} [${[pokeInfoObject.id]}]`;
+            pokemonStats.$pokemonName.textContent = `${capitalize(pokeInfoObject.name)}`;
+            pokemonStats.$pokemonID.textContent = ` [${pokeInfoObject.id}]`;
             pokemonStats.$height.textContent = `Height: ${pokeInfoObject.height / 10} m`;
             pokemonStats.$weight.textContent = `Weight: ${pokeInfoObject.weight / 10} kg`;
             pokemonStats.$type.textContent = `Type: ${capitalize(pokeInfoObject.types[0].type.name)}
@@ -283,4 +296,3 @@ function toggleInputError(behavior) {
 }
 
 function capitalize(string) { return string.charAt(0).toUpperCase() + string.slice(1); }
-

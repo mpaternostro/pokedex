@@ -26,6 +26,10 @@ img#pokedex-image {
   flex: 1;
 }
 
+#pokemon-table tr{
+  cursor: pointer;
+}
+
 #table {
   flex: 1;
   margin: 10px;
