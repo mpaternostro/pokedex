@@ -35,7 +35,7 @@ $searchButton.addEventListener('click', valorEvento => {
 });
 
 Array.from($pokemonTable.children).forEach(value => {
-    value.addEventListener('click', row => {
+    value.addEventListener('click', () => {
         showPokemon(value.children[2].textContent);
     });
 });
@@ -83,6 +83,27 @@ function listPokemons() {
     });
 }
 
+function validatePokemon(pokemon) {
+    if (everyPokemonName.includes(capitalize(pokemon.toLowerCase()))) {
+        toggleInputError('hide');
+        return true;
+    } else {
+        toggleInputError('show');
+    }
+}
+
+function toggleInputError(behavior) {
+    const $nameError = document.querySelector('#name-error');
+    if (behavior === 'hide') {
+        $nameError.classList.add('d-none');
+        $searchInput.classList.remove('alert-danger');
+    }
+    if (behavior === 'show') {
+        $nameError.classList.remove('d-none');
+        $searchInput.classList.add('alert-danger');
+    }
+}
+
 function checkInvalidSelection(userSelection) {
     if (userSelection.children[0].classList.contains('disabled') || userSelection.classList.contains('active')) {
         return true;
@@ -119,18 +140,18 @@ function pageSelector(newActualPage) {
     listPokemons();
 }
 
-function toggleDisabled() {
-    const $previous = $pagination.children[0];
-    $actualPage.textContent === '1' ? $previous.classList.add('disabled') : $previous.classList.remove('disabled');
+function showAsActive(newActualpage) {
+    $actualPage.classList.remove('active');
+    newActualpage.classList.add('active');
 }
 
 function updateActualPage(newActualPage) {
     $actualPage = newActualPage;
 }
 
-function showAsActive(newActualpage) {
-    $actualPage.classList.remove('active');
-    newActualpage.classList.add('active');
+function toggleDisabled() {
+    const $previous = $pagination.children[0];
+    $actualPage.textContent === '1' ? $previous.classList.add('disabled') : $previous.classList.remove('disabled');
 }
 
 function placeInTheMiddle() {
@@ -150,23 +171,6 @@ function placeInTheMiddle() {
         $rightPage.children[0].textContent = pageNumber - 1;
         $pagination.insertAdjacentElement('afterbegin', $rightPage);
         $pagination.insertAdjacentElement('afterbegin', $previous);
-    }
-}
-
-function notInTheMiddle(page) {
-    if (page !== $pagination.children[2]) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function validatePokemon(pokemon) {
-    if (everyPokemonName.includes(capitalize(pokemon.toLowerCase()))) {
-        toggleInputError('hide');
-        return true;
-    } else {
-        toggleInputError('show');
     }
 }
 
@@ -280,18 +284,6 @@ function toggleSpinner(behavior, relative) {
         $relative.classList.add('d-none');
         $spinner.classList.remove('d-none');
         $spinner.classList.add('d-flex');
-    }
-}
-
-function toggleInputError(behavior) {
-    const $nameError = document.querySelector('#name-error');
-    if (behavior === 'hide') {
-        $nameError.classList.add('d-none');
-        $searchInput.classList.remove('alert-danger');
-    }
-    if (behavior === 'show') {
-        $nameError.classList.remove('d-none');
-        $searchInput.classList.add('alert-danger');
     }
 }
 

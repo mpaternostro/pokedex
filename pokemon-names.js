@@ -744,7 +744,7 @@ const everyPokemonName = [
 	"Ribombee",
 	"Rockruff",
 	"Lycanroc",
-	"Wishiwashi",
+	"Wishiwashi-solo",
 	"Mareanie",
 	"Toxapex",
 	"Mudbray",
