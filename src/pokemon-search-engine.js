@@ -26,7 +26,7 @@ export async function addToCache(pokemonQuery) {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonQuery}/`);
     const data = await response.json();
     localStorage.setItem(`${data.name}`, setNecessaryItems(data));
-    return data.name;
+    return data;
   } catch (error) {
     console.error('API DIDNT FOUND THIS POKEMON', error);
     return undefined;

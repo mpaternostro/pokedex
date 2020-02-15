@@ -1,13 +1,16 @@
-import { loadRandomPokemon, loadPokedex, listPokemons } from './ui.js';
+import {
+  getRandomPokemon, loadPokedex, listPokemons, pageHandler,
+} from './ui.js';
 
 function update() {
-
+  // pageHandler();
 }
 
 async function start() {
-  loadRandomPokemon();
-  // loadPokedex(update);
-  // listPokemons(update);
+  const randomPokemon = await getRandomPokemon();
+  loadPokedex(randomPokemon);
+  debugger;
+  listPokemons();
 }
 
 start();
