@@ -548,7 +548,7 @@ const everyPokemonName = [
   'whimsicott',
   'petilil',
   'lilligant',
-  'basculin',
+  'basculin-red-striped ',
   'sandile',
   'krokorok',
   'krookodile',
@@ -739,7 +739,7 @@ const everyPokemonName = [
   'vikavolt',
   'crabrawler',
   'crabominable',
-  'oricorio',
+  'oricorio-baile',
   'cutiefly',
   'ribombee',
   'rockruff',
@@ -819,7 +819,7 @@ export function getRandomPokemonName() {
 
 export function browseByID(pokemonID) {
   const listOfPokemons = [];
-  for (let i = 0; i < 10; i = +1) {
+  for (let i = 0; i < 10; i += 1) {
     listOfPokemons.push(everyPokemonName[pokemonID + 1]);
   }
   return listOfPokemons;

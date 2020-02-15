@@ -1,10 +1,3 @@
-function checkInvalidSelection(userSelection) {
-  if (userSelection.children[0].classList.contains('disabled') || userSelection.classList.contains('active')) {
-    return true;
-  }
-  return false;
-}
-
 function setActivePage(newCurrentPage) {
   $currentPage.classList.remove('active');
   newCurrentPage.classList.add('active');
@@ -37,4 +30,32 @@ function placePageInTheMiddle() {
     $pagination.insertAdjacentElement('afterbegin', $rightPage);
     $pagination.insertAdjacentElement('afterbegin', $previous);
   }
+}
+
+export function previous() {
+  const newCurrentPage = $currentPage.previousElementSibling;
+  newCurrentPage.children[0].textContent = Number($currentPage.textContent) - 1;
+  setActivePage(newCurrentPage);
+  updateCurrentPage(newCurrentPage);
+  togglePreviousBtnAsDisabled();
+  placePageInTheMiddle();
+  listPokemons();
+}
+
+export function next() {
+  const newCurrentPage = $currentPage.nextElementSibling;
+  newCurrentPage.children[0].textContent = Number($currentPage.textContent) + 1;
+  setActivePage(newCurrentPage);
+  updateCurrentPage(newCurrentPage);
+  togglePreviousBtnAsDisabled();
+  placePageInTheMiddle();
+  listPokemons();
+}
+
+export function pageSelector(newCurrentPage) {
+  setActivePage(newCurrentPage);
+  updateCurrentPage(newCurrentPage);
+  togglePreviousBtnAsDisabled();
+  placePageInTheMiddle();
+  listPokemons();
 }

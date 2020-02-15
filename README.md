@@ -9,3 +9,4 @@ Construir un pokedex https://pokeapi.co/
 
 Links:
 - Promise Image: https://stackoverflow.com/questions/52059596/loading-an-image-on-web-browser-using-promise
+- Async Handling Errors: https://dev.to/sobiodarlington/better-error-handling-with-async-await-2e5m
