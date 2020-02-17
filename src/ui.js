@@ -1,22 +1,10 @@
-import { getRandomPokemonName, browseByID } from './pokemon-names.js';
-
-import { previous, next, pageSelector } from './page-management.js';
+import { getRandomPokemon } from './pokemon-names-functions.js';
 
 import { waitImageLoad, getPokemon } from './pokemon-search-engine.js';
 
-function capitalize(string) { return string.charAt(0).toUpperCase() + string.slice(1); }
+import { checkCurrentPokemon } from './validations.js';
 
-function toggleInputError(behavior) {
-  const $nameError = document.querySelector('#name-error');
-  if (behavior === 'hide') {
-    $nameError.classList.add('d-none');
-    $searchInput.classList.remove('alert-danger');
-  }
-  if (behavior === 'show') {
-    $nameError.classList.remove('d-none');
-    $searchInput.classList.add('alert-danger');
-  }
-}
+export function capitalize(string) { return string.charAt(0).toUpperCase() + string.slice(1); }
 
 export function toggleSpinner(behavior) {
   const $spinner = document.querySelector('#spinner');
@@ -35,11 +23,26 @@ export function toggleSpinner(behavior) {
   }
 }
 
+function toggleInputError(behavior) {
+  const $searchInput = document.querySelector('#pokemon-tracker input');
+  const $nameError = document.querySelector('#name-error');
+  if (behavior === 'hide') {
+    $nameError.classList.add('d-none');
+    $searchInput.classList.remove('alert-danger');
+  }
+  if (behavior === 'show') {
+    $nameError.classList.remove('d-none');
+    $searchInput.classList.add('alert-danger');
+  }
+}
+
 export async function loadPokedex(pokeInfoObject) {
   if (pokeInfoObject === undefined) {
+    toggleSpinner('hide');
     return;
   }
-  const image = await waitImageLoad(`https://pokeres.bastionbot.org/images/pokemon/${pokeInfoObject.id}.png`).catch((error) => console.error('COULD NOT GET PHOTO', error));
+  const image = await waitImageLoad(`https://pokeres.bastionbot.org/images/pokemon/${pokeInfoObject.id}.png`)
+    .catch((error) => console.error('COULD NOT GET PHOTO', error));
   const pokemonStats = {
     $image: document.querySelector('#pokedex-image'),
     $name: document.querySelector('#pokedex #pokemon-name'),
@@ -66,90 +69,89 @@ export async function loadPokedex(pokeInfoObject) {
   toggleSpinner('hide');
 }
 
-function loadTable(pokemonTableData, pokeInfoObject) {
-  const pokemonSprite = pokemonTableData.children[0].children[0];
-  const pokemonName = pokemonTableData.children[2];
-  const pokemonHP = pokemonTableData.children[3];
-  const pokemonATK = pokemonTableData.children[4];
-  const pokemonDEF = pokemonTableData.children[5];
-  if (pokeInfoObject.sprites.front_default) {
-    pokemonSprite.src = `${pokeInfoObject.sprites.front_default}`;
-  } else {
-    pokemonSprite.src = `${pokeInfoObject.sprites}`;
-  }
-  pokemonName.textContent = `${capitalize(pokeInfoObject.name)}`;
-  pokemonHP.textContent = `${pokeInfoObject.stats[5].base_stat}`;
-  pokemonATK.textContent = `${pokeInfoObject.stats[4].base_stat}`;
-  pokemonDEF.textContent = `${pokeInfoObject.stats[3].base_stat}`;
-}
-
-
-export async function getRandomPokemon() {
-  const randomPokemonName = getRandomPokemonName();
-  const currentPokemon = document.querySelector('#pokedex #pokemon-name').dataset.pokemonName;
-  if (randomPokemonName === currentPokemon) {
-    return undefined;
-  }
-  const randomPokemon = await getPokemon(randomPokemonName);
-  if (randomPokemon === undefined) {
-    return undefined;
-  }
-  toggleSpinner('show');
-  return randomPokemon;
-}
-
-export async function listPokemons() {
-  const $pokemonNumbers = Array.from(document.querySelectorAll('#pokemon-table .pokemon-id')); // <th>[10]
+export function loadTable(pokeInfoObject) {
   const $listOfPokemons = Array.from(document.querySelector('#pokemon-table').children); // <tr>[10]
-  const $currentPage = document.querySelector('.pagination').children[1];
-  const currentPageNumber = Number($currentPage.textContent);
-  const firstID = (currentPageNumber - 1) * 10 + 1;
-  const pokemons = browseByID(firstID);
-  const pokemonsData = [];
-  for (let i = 0; i < 10; i += 1) {
-    pokemonsData.push(await getPokemon(pokemons));
-  }
-  $pokemonNumbers.forEach((value, i) => {
-    $pokemonNumbers[i].textContent = firstID + i;
-  });
-  $listOfPokemons.forEach((value, i) => {
-    // const cachedPokemon = JSON.parse(localStorage.getItem(`${pokemonsToShowInTable[i].toLowerCase()}`));
-    // if (cachedPokemon) {
-    //   loadTable(value, cachedPokemon);
-    // } else {
-    //   loadTable(value, getPokemon(pokemonsToShowInTable[i]));
-    // }
-    loadTable(value, pokemonsData[i]);
+  $listOfPokemons.forEach((row, i) => {
+    const pokemonSprite = row.children[0].children[0];
+    const pokemonID = row.children[1];
+    const pokemonName = row.children[2];
+    const pokemonHP = row.children[3];
+    const pokemonATK = row.children[4];
+    const pokemonDEF = row.children[5];
+    if (pokeInfoObject[i].sprites.front_default) {
+      pokemonSprite.src = `${pokeInfoObject[i].sprites.front_default}`;
+    } else {
+      pokemonSprite.src = `${pokeInfoObject[i].sprites}`;
+    }
+    pokemonID.dataset.pokemonId = pokeInfoObject[i].id;
+    pokemonID.textContent = pokeInfoObject[i].id;
+    pokemonName.dataset.pokemonName = pokeInfoObject[i].name;
+    pokemonName.textContent = `${capitalize(pokeInfoObject[i].name)}`;
+    pokemonHP.textContent = `${pokeInfoObject[i].stats[5].base_stat}`;
+    pokemonATK.textContent = `${pokeInfoObject[i].stats[4].base_stat}`;
+    pokemonDEF.textContent = `${pokeInfoObject[i].stats[3].base_stat}`;
   });
 }
 
-function checkInvalidSelection(userSelection) {
-  if (userSelection.children[0].classList.contains('disabled') || userSelection.classList.contains('active')) {
-    return true;
-  }
-  return false;
+export function loadPokedexFromTable(callbackPokemonSelector) {
+  const $pokemonTable = document.querySelector('#pokemon-table');
+  Array.from($pokemonTable.children).forEach((value) => {
+    value.addEventListener('click', async () => {
+      toggleSpinner('show');
+      const { pokemonName } = value.children[2].dataset;
+      if (checkCurrentPokemon(pokemonName) === true) {
+        return;
+      }
+      const pokemon = await getPokemon(pokemonName);
+      callbackPokemonSelector(pokemon);
+    });
+  });
 }
 
-export function pageHandler() {
-  const $pagination = document.querySelector('.pagination');
-  $pagination.addEventListener('click', (valorEvento) => {
-    const $selectedElement = valorEvento.target.parentElement;
-    const $previous = $pagination.children[0];
-    const $next = $pagination.children[4];
-    if (checkInvalidSelection($selectedElement) === true) {
-      return;
-    }
-    if ($selectedElement === $previous) {
-      previous();
-      listPokemons();
-      return;
-    }
-    if ($selectedElement === $next) {
-      next();
-      listPokemons();
-      return;
-    }
-    pageSelector($selectedElement);
-    listPokemons();
+function HomeBtn() {
+  const $homeButton = document.querySelector('#home-button');
+  $homeButton.addEventListener('click', () => {
+    window.location.reload();
   });
+}
+
+function randomBtn(callbackPokemonSelector) {
+  const $randomButton = document.querySelector('#random-button');
+  $randomButton.addEventListener('click', async () => {
+    toggleSpinner('show');
+    const randomPokemon = await getRandomPokemon();
+    if (checkCurrentPokemon(randomPokemon) === true) {
+      callbackPokemonSelector(undefined);
+      return;
+    }
+    callbackPokemonSelector(randomPokemon);
+  });
+}
+
+function searchBtn(callbackPokemonSelector) {
+  const $searchButton = document.querySelector('#pokemon-tracker button');
+  const $searchInput = document.querySelector('#pokemon-tracker input');
+  $searchButton.addEventListener('click', async (valorEvento) => {
+    toggleSpinner('show');
+    const inputValue = $searchInput.value;
+    if (checkCurrentPokemon(inputValue) === true) {
+      callbackPokemonSelector(undefined);
+      return;
+    }
+    toggleInputError('hide');
+    const pokemon = await getPokemon(inputValue);
+    if (pokemon === undefined) {
+      toggleInputError('show');
+      callbackPokemonSelector(pokemon);
+      return;
+    }
+    callbackPokemonSelector(pokemon);
+    valorEvento.preventDefault();
+  });
+}
+
+export function handleButtons(callbackPokemonSelector) {
+  HomeBtn();
+  randomBtn(callbackPokemonSelector);
+  searchBtn(callbackPokemonSelector);
 }
