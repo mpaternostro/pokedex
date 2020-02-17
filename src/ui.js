@@ -70,7 +70,7 @@ export async function loadPokedex(pokeInfoObject) {
 }
 
 export function loadTable(pokeInfoObject) {
-  const $listOfPokemons = Array.from(document.querySelector('#pokemon-table').children); // <tr>[10]
+  const $listOfPokemons = Array.from(document.querySelector('#pokemon-table').children);
   $listOfPokemons.forEach((row, i) => {
     const pokemonSprite = row.children[0].children[0];
     const pokemonID = row.children[1];
@@ -133,7 +133,7 @@ function searchBtn(callbackPokemonSelector) {
   const $searchInput = document.querySelector('#pokemon-tracker input');
   $searchButton.addEventListener('click', async (valorEvento) => {
     toggleSpinner('show');
-    const inputValue = $searchInput.value;
+    const inputValue = $searchInput.value.toLowerCase();
     if (checkCurrentPokemon(inputValue) === true) {
       callbackPokemonSelector(undefined);
       return;
