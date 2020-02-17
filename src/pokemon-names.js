@@ -1,4 +1,5 @@
 const everyPokemonName = [
+  undefined,
   'bulbasaur',
   'ivysaur',
   'venusaur',
@@ -81,7 +82,7 @@ const everyPokemonName = [
   'slowbro',
   'magnemite',
   'magneton',
-  'farfetch’d',
+  'farfetchd',
   'doduo',
   'dodrio',
   'seel',
@@ -676,10 +677,10 @@ const everyPokemonName = [
   'pangoro',
   'furfrou',
   'espurr',
-  'meowstic',
+  'meowstic-male',
   'honedge',
   'doublade',
-  'aegislash',
+  'aegislash-shield',
   'spritzee',
   'aromatisse',
   'swirlix',
@@ -743,7 +744,7 @@ const everyPokemonName = [
   'cutiefly',
   'ribombee',
   'rockruff',
-  'lycanroc',
+  'lycanroc-midday',
   'wishiwashi-solo',
   'mareanie',
   'toxapex',
@@ -810,17 +811,4 @@ const everyPokemonName = [
   'melmetal',
 ];
 
-export function getRandomPokemonName() {
-  const lastID = everyPokemonName.length - 3; // -3 because POKEAPI last ID is 807
-  const randomID = Math.floor(Math.random() * lastID);
-  const randomPokemonName = everyPokemonName[randomID];
-  return randomPokemonName;
-}
-
-export function browseByID(pokemonID) {
-  const listOfPokemons = [];
-  for (let i = 0; i < 10; i += 1) {
-    listOfPokemons.push(everyPokemonName[pokemonID + 1]);
-  }
-  return listOfPokemons;
-}
+export default everyPokemonName;

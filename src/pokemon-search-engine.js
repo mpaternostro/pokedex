@@ -33,16 +33,6 @@ export async function addToCache(pokemonQuery) {
   }
 }
 
-function addToCacheLoadTable(pokemonRow) { // no va a existir mas
-  const pokemonID = pokemonRow.children[1].textContent;
-  fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonID}/`)
-    .then((response) => response.json())
-    .then((responseJSON) => {
-      localStorage.setItem(`${responseJSON.name}`, setNecessaryItems(responseJSON));
-      // loadTable(pokemonRow, responseJSON);
-    });
-}
-
 // le das el nombre de un pokemon y el sabe que hacer para que vos obtengas la data que necesitas
 export function getPokemon(pokemon) {
   // cuando este todo bien, el toLowerCase se podria skipear
@@ -53,4 +43,12 @@ export function getPokemon(pokemon) {
   }
   cachedPokemon = addToCache(pokemonLowerCase);
   return cachedPokemon;
+}
+
+export async function getPokemonsData(pokemonsNames) {
+  const pokemonsData = pokemonsNames.map(async (pokemon) => {
+    const pokemonData = await getPokemon(pokemon);
+    return pokemonData;
+  });
+  return Promise.all(pokemonsData);
 }
