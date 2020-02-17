@@ -33,15 +33,12 @@ export async function addToCache(pokemonQuery) {
   }
 }
 
-// le das el nombre de un pokemon y el sabe que hacer para que vos obtengas la data que necesitas
 export function getPokemon(pokemon) {
-  // cuando este todo bien, el toLowerCase se podria skipear
-  const pokemonLowerCase = pokemon.toLowerCase();
-  let cachedPokemon = JSON.parse(localStorage.getItem(pokemonLowerCase));
+  let cachedPokemon = JSON.parse(localStorage.getItem(pokemon));
   if (cachedPokemon) {
     return cachedPokemon;
   }
-  cachedPokemon = addToCache(pokemonLowerCase);
+  cachedPokemon = addToCache(pokemon);
   return cachedPokemon;
 }
 
