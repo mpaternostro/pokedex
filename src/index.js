@@ -1,24 +1,25 @@
-import {
-  loadPokedex, loadPokedexFromTable, loadTable, handleButtons,
-} from './ui.js';
+import { getPokemonsData, getRandomPokemon } from './storage/pokemon.js';
+import { showSpinner } from './utilities/utilities.js';
+import loadPokedex from './ui/pokedex.js';
+import { loadTable, loadPokedexFromTable } from './ui/table.js';
+import handlePaginator from './ui/paginator.js';
+import handleNavbarButtons from './ui/navbar.js';
 
-import { pageHandler } from './page-management.js';
-
-import { getRandomPokemon, arrPokemonsData } from './pokemon-names-functions.js';
-
-async function updatePokedex(pokemon) {
+async function handlePokedex(pokemon) {
   loadPokedex(pokemon);
 }
 
-async function updateTable() {
-  loadTable(await arrPokemonsData());
+async function handleTable(pageNumber = 1) {
+  loadTable(await getPokemonsData(pageNumber));
+  handlePaginator(pageNumber, handleTable);
+  loadPokedexFromTable(handlePokedex);
 }
 
 async function start() {
-  updatePokedex(await getRandomPokemon());
-  pageHandler(updateTable);
-  handleButtons(updatePokedex);
-  loadPokedexFromTable(updatePokedex);
+  handlePokedex(await getRandomPokemon());
+  showSpinner();
+  handleTable();
+  handleNavbarButtons(handlePokedex);
 }
 
 start();
