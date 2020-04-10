@@ -14,10 +14,6 @@
 <body>
   <nav class="navbar navbar-expand-md navbar-light bg-light m-3">
     <a class="navbar-brand" href="#">Pokédex</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
@@ -27,11 +23,9 @@
           <a class="nav-link" id="random-button" href="#">Random</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0" id="pokemon-tracker">
-        <div id="name-error" class="alert alert-danger form-control d-none" role="alert">
-          Pokémon not found in database
-        </div>
-        <input id="search-pokemon" class="form-control mr-sm-4" type="search" placeholder="Search Pokémon" aria-label="Search" />
+      <form class="form-inline my-2 my-lg-0" id="search-pokemon">
+        <!-- ERROR -->
+        <input class="form-control mr-sm-4" type="search" placeholder="Search Pokémon" aria-label="Search" />
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
           Search
         </button>
@@ -39,38 +33,13 @@
     </div>
   </nav>
   <div class="d-flex p-2 justify-content-between">
-    <div class="media d-none" id="pokedex">
-      <img src="" class="mr-3" id="pokedex-image" alt="pokemon-image" />
-      <div class="media-body">
-        <h5 class="mt-0">
-          <strong id="pokemon-name" data-pokemon-name=""></strong>
-          <strong id="pokemon-id" data-pokemon-id=""></strong>
-        </h5>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item" id="height"></li>
-          <li class="list-group-item" id="weight"></li>
-          <li class="list-group-item" id="type"></li>
-          <br />
-          <ul class="list-group list-group-flush">
-            <strong>Base Stats</strong>
-            <li class="list-group-item base-stats" id="speed"></li>
-            <li class="list-group-item base-stats" id="special-defense"></li>
-            <li class="list-group-item base-stats" id="special-attack"></li>
-            <li class="list-group-item base-stats" id="defense"></li>
-            <li class="list-group-item base-stats" id="attack"></li>
-            <li class="list-group-item base-stats" id="hp"></li>
-            <li class="list-group-item" id="base-experience"></li>
-          </ul>
-        </ul>
-      </div>
+    <!-- POKEDEX -->
+    <div id="pokedex" class="d-flex flex-column flex-fill ml-5 mr-5">
+      <!-- SPINNER OR POKEMON -->
     </div>
-    <div class="d-flex justify-content-center align-items-center" id="spinner">
-      <div class="spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div>
-    <div id="table" class="d-flex flex-column">
-      <table class="table table-striped">
+    <div id="table" class="d-flex flex-column flex-fill ml-5 mr-5">
+      <!-- TABLE -->
+      <table class="table table-striped mb-0">
         <thead>
           <tr>
             <th scope="col" name="sprite"></th>
@@ -82,117 +51,10 @@
           </tr>
         </thead>
         <tbody id="pokemon-table">
-          <tr>
-            <td class="pokemon-sprite text-center">
-              <img src="" alt="table-sprite" />
-            </td>
-            <th scope="row" class="pokemon-id">1</th>
-            <td class="pokemon-name"></td>
-            <td class="pokemon-hp"></td>
-            <td class="pokemon-atk"></td>
-            <td class="pokemon-def"></td>
-          </tr>
-          <tr>
-            <td class="pokemon-sprite text-center">
-              <img src="" alt="table-sprite" />
-            </td>
-            <th scope="row" class="pokemon-id">2</th>
-            <td class="pokemon-name"></td>
-            <td class="pokemon-hp"></td>
-            <td class="pokemon-atk"></td>
-            <td class="pokemon-def"></td>
-          </tr>
-          <tr>
-            <td class="pokemon-sprite text-center">
-              <img src="" alt="table-sprite" />
-            </td>
-            <th scope="row" class="pokemon-id">3</th>
-            <td class="pokemon-name"></td>
-            <td class="pokemon-hp"></td>
-            <td class="pokemon-atk"></td>
-            <td class="pokemon-def"></td>
-          </tr>
-          <tr>
-            <td class="pokemon-sprite text-center">
-              <img src="" alt="table-sprite" />
-            </td>
-            <th scope="row" class="pokemon-id">4</th>
-            <td class="pokemon-name"></td>
-            <td class="pokemon-hp"></td>
-            <td class="pokemon-atk"></td>
-            <td class="pokemon-def"></td>
-          </tr>
-          <tr>
-            <td class="pokemon-sprite text-center">
-              <img src="" alt="table-sprite" />
-            </td>
-            <th scope="row" class="pokemon-id">5</th>
-            <td class="pokemon-name"></td>
-            <td class="pokemon-hp"></td>
-            <td class="pokemon-atk"></td>
-            <td class="pokemon-def"></td>
-          </tr>
-          <tr>
-            <td class="pokemon-sprite text-center">
-              <img src="" alt="table-sprite" />
-            </td>
-            <th scope="row" class="pokemon-id">6</th>
-            <td class="pokemon-name"></td>
-            <td class="pokemon-hp"></td>
-            <td class="pokemon-atk"></td>
-            <td class="pokemon-def"></td>
-          </tr>
-          <tr>
-            <td class="pokemon-sprite text-center">
-              <img src="" alt="table-sprite" />
-            </td>
-            <th scope="row" class="pokemon-id">7</th>
-            <td class="pokemon-name"></td>
-            <td class="pokemon-hp"></td>
-            <td class="pokemon-atk"></td>
-            <td class="pokemon-def"></td>
-          </tr>
-          <tr>
-            <td class="pokemon-sprite text-center">
-              <img src="" alt="table-sprite" />
-            </td>
-            <th scope="row" class="pokemon-id">8</th>
-            <td class="pokemon-name"></td>
-            <td class="pokemon-hp"></td>
-            <td class="pokemon-atk"></td>
-            <td class="pokemon-def"></td>
-          </tr>
-          <tr>
-            <td class="pokemon-sprite text-center">
-              <img src="" alt="table-sprite" />
-            </td>
-            <th scope="row" class="pokemon-id">9</th>
-            <td class="pokemon-name"></td>
-            <td class="pokemon-hp"></td>
-            <td class="pokemon-atk"></td>
-            <td class="pokemon-def"></td>
-          </tr>
-          <tr>
-            <td class="pokemon-sprite text-center">
-              <img src="" alt="table-sprite" />
-            </td>
-            <th scope="row" class="pokemon-id">10</th>
-            <td class="pokemon-name"></td>
-            <td class="pokemon-hp"></td>
-            <td class="pokemon-atk"></td>
-            <td class="pokemon-def"></td>
-          </tr>
         </tbody>
       </table>
-      <nav aria-label="table-navigation" class="align-self-center">
-        <ul class="pagination">
-          <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-          </li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
+      <!-- PAGINATOR -->
+      <nav aria-label="table-navigation" class="align-self-center" id="paginator">
       </nav>
     </div>
     
