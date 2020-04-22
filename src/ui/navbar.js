@@ -21,15 +21,14 @@ function searchBtn(callbackPokemonSelector) {
   const $searchButton = document.querySelector('#search-pokemon button');
   $searchButton.addEventListener('click', async (valorEvento) => {
     valorEvento.preventDefault();
+    toggleInputError('hide');
     const inputValue = $searchInput.value.toLowerCase();
-    const $error = document.querySelector('#name-error');
-    if (checkCurrentPokemon(inputValue)) return;
+    if (!inputValue || checkCurrentPokemon(inputValue)) return;
     if (!checkValidPokemon(inputValue)) {
       toggleInputError('show');
       return;
     }
     showSpinner();
-    if ($error) toggleInputError('hide');
     const pokemon = await getPokemon(inputValue);
     callbackPokemonSelector(pokemon);
   });
