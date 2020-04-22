@@ -1,10 +1,7 @@
 export function capitalize(string) { return string.charAt(0).toUpperCase() + string.slice(1); }
 
-export function checkPageSelection(userSelection) {
-  if (userSelection.children[0].classList.contains('disabled') || userSelection.classList.contains('active')) {
-    return true;
-  }
-  return false;
+export function checkValidPage(page) {
+  return !!((page.classList.contains('active') || page.classList.contains('disabled')));
 }
 
 export function waitImageLoad(URL) {
@@ -29,14 +26,15 @@ export function showSpinner() {
 
 export function toggleInputError(behavior) {
   const $nameError = document.querySelector('#name-error');
+  if (!$nameError && behavior === 'hide') return;
   if ($nameError) $nameError.remove();
   const $searchPokemon = document.querySelector('#search-pokemon');
   const $searchInput = $searchPokemon.querySelector('input');
+  if (behavior === 'hide') $searchInput.classList.remove('alert-danger');
   const error = `
       <div id="name-error" class="alert-danger form-control mr-2" role="alert">
         Pokémon not found in database
       </div>`;
-  if (behavior === 'hide') $searchInput.classList.remove('alert-danger');
   if (behavior === 'show') {
     $searchPokemon.insertAdjacentHTML('afterbegin', error);
     $searchInput.classList.add('alert-danger');

@@ -19,12 +19,11 @@ export async function getPokemon(pokemonName) {
 export async function getRandomPokemon() {
   const randomPokemonName = getRandomPokemonName();
   const randomPokemon = await getPokemon(randomPokemonName);
-  if (randomPokemon === undefined) return undefined;
   return randomPokemon;
 }
 
 function createArrayPokemonNames(currentPage) {
-  const firstID = (currentPage - 1) * 10 + 1;
+  const firstID = (currentPage - 1) * 10;
   const pokemonNames = [];
   for (let i = firstID; i < firstID + 10; i += 1) pokemonNames.push(everyPokemonName[i]);
   return pokemonNames;

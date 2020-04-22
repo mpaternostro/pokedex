@@ -18,8 +18,7 @@ function setNecessaryItems(pokeApiResponse) {
 
 async function addPokemonToCache(pokemonQuery) {
   const endpoint = `https://pokeapi.co/api/v2/pokemon/${pokemonQuery}/`;
-  const response = await fetch(endpoint);
-  const data = await response.json();
+  const data = await (await fetch(endpoint)).json();
   localStorage.setItem(`${data.name}`, setNecessaryItems(data));
 }
 
