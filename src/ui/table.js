@@ -1,6 +1,6 @@
 import { checkCurrentPokemon } from '../utilities/check-input.js';
 import { capitalize, showSpinner } from '../utilities/utilities.js';
-import { getPokemon } from '../storage/pokemon.js';
+import { getPokemon } from '../services/pokemon.js';
 
 export function loadTable(pokemonList) {
   const table = document.querySelector('#pokemon-table');

@@ -1,25 +1,6 @@
-function setNecessaryItems(pokeApiResponse) {
-  const {
-    id,
-    name,
-    height,
-    weight,
-    types,
-    stats,
-    // eslint-disable-next-line camelcase
-    base_experience,
-    sprites: { front_default: sprite },
-  } = pokeApiResponse;
-  const necessaryItems = {
-    id, name, height, weight, types, stats, base_experience, sprite,
-  };
-  return JSON.stringify(necessaryItems);
+async function loadPokemon(pokemonName) {
+  const endpoint = `https://pokeapi.co/api/v2/pokemon/${pokemonName}/`;
+  return (await fetch(endpoint)).json();
 }
 
-async function addPokemonToCache(pokemonQuery) {
-  const endpoint = `https://pokeapi.co/api/v2/pokemon/${pokemonQuery}/`;
-  const data = await (await fetch(endpoint)).json();
-  localStorage.setItem(`${data.name}`, setNecessaryItems(data));
-}
-
-export default addPokemonToCache;
+export default loadPokemon;
