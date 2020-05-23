@@ -1,5 +1,5 @@
 import { showSpinner, toggleInputError } from '../utilities/utilities.js';
-import { getRandomPokemon, getPokemon } from '../storage/pokemon.js';
+import { getRandomPokemon, getPokemon } from '../services/pokemon.js';
 import { checkCurrentPokemon, checkValidPokemon } from '../utilities/check-input.js';
 
 function HomeBtn() {

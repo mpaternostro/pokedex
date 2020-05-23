@@ -33,7 +33,7 @@ async function loadPokedex(pokemon) {
             <li class="list-group-item">${capitalize(pokemon.stats[3].stat.name)}: ${pokemon.stats[3].base_stat}</li>
             <li class="list-group-item">${capitalize(pokemon.stats[4].stat.name)}: ${pokemon.stats[4].base_stat}</li>
             <li class="list-group-item">${capitalize(pokemon.stats[5].stat.name)}: ${pokemon.stats[5].base_stat}</li>
-            <li class="list-group-item">Base Experience: ${pokemon.base_experience}</li>
+            <li class="list-group-item">Base Experience: ${pokemon.baseExperience}</li>
           </ul>
         </ul>
       </div>

@@ -1,39 +1,20 @@
-import addPokemonToCache from '../api/api.js';
-import everyPokemonName from '../pokemon-names.js';
+export function loadPokemon(pokemonName) {
+  if (!pokemonName) {
+    throw new Error('A Pokemon name is mandatory in order to get Pokemon');
+  }
 
-function getRandomPokemonName() {
-  const lastID = everyPokemonName.length - 1;
-  const randomID = Math.ceil(Math.random() * lastID);
-  const randomPokemonName = everyPokemonName[randomID];
-  return randomPokemonName;
+  const pokemon = JSON.parse(localStorage.getItem(pokemonName));
+  if (pokemon === null) {
+    throw new Error(`${pokemonName} not found`);
+  }
+
+  return pokemon;
 }
 
-export async function getPokemon(pokemonName) {
-  let cachedPokemon = JSON.parse(localStorage.getItem(pokemonName));
-  if (cachedPokemon) return cachedPokemon;
-  await addPokemonToCache(pokemonName);
-  cachedPokemon = JSON.parse(localStorage.getItem(pokemonName));
-  return cachedPokemon;
-}
+export function savePokemon(pokemonName, pokemonData) {
+  if (!pokemonName || typeof pokemonData !== 'object') {
+    throw new Error('A Pokemon name and object type data is mandatory in order to save Pokemon');
+  }
 
-export async function getRandomPokemon() {
-  const randomPokemonName = getRandomPokemonName();
-  const randomPokemon = await getPokemon(randomPokemonName);
-  return randomPokemon;
-}
-
-function createArrayPokemonNames(currentPage) {
-  const firstID = (currentPage - 1) * 10;
-  const pokemonNames = [];
-  for (let i = firstID; i < firstID + 10; i += 1) pokemonNames.push(everyPokemonName[i]);
-  return pokemonNames;
-}
-
-export async function getPokemonsData(pageNumber) {
-  const pokemonsNames = createArrayPokemonNames(pageNumber);
-  const pokemonsData = pokemonsNames.map(async (pokemon) => {
-    const pokemonData = await getPokemon(pokemon);
-    return pokemonData;
-  });
-  return Promise.all(pokemonsData);
+  localStorage.setItem(pokemonName, JSON.stringify(pokemonData));
 }
