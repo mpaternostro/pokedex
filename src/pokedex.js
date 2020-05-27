@@ -1,4 +1,4 @@
-import { getPokemonsData, getRandomPokemon } from './services/pokemon.js';
+import { getPokemons, getRandomPokemon } from './services/pokemon.js';
 import { showSpinner } from './utilities/utilities.js';
 import loadPokedex from './ui/pokedex.js';
 import { loadTable, loadPokedexFromTable } from './ui/table.js';
@@ -10,7 +10,7 @@ async function handlePokedex(pokemon) {
 }
 
 async function handleTable(pageNumber = 1) {
-  loadTable(await getPokemonsData(pageNumber));
+  loadTable(await getPokemons(pageNumber));
   handlePaginator(pageNumber, handleTable);
   loadPokedexFromTable(handlePokedex);
 }

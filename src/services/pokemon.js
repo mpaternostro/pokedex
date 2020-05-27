@@ -43,11 +43,11 @@ function createArrayPokemonNames(currentPage) {
   return pokemonNames;
 }
 
-export async function getPokemonsData(pageNumber) {
+export async function getPokemons(pageNumber) {
   const pokemonsNames = createArrayPokemonNames(pageNumber);
-  const pokemonsData = pokemonsNames.map(async (pokemon) => {
+  const pokemons = pokemonsNames.map(async (pokemon) => {
     const pokemonData = await getPokemon(pokemon);
     return pokemonData;
   });
-  return Promise.all(pokemonsData);
+  return Promise.all(pokemons);
 }
