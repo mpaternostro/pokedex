@@ -27,12 +27,12 @@ async function loadPokedex(pokemon) {
           <br/>
           <ul class="list-group list-group-flush">
             <strong>Base Stats</strong>
-            <li class="list-group-item">${capitalize(pokemon.stats[0].stat.name)}: ${pokemon.stats[0].base_stat}</li>
-            <li class="list-group-item">${capitalize(pokemon.stats[1].stat.name)}: ${pokemon.stats[1].base_stat}</li>
-            <li class="list-group-item">${capitalize(pokemon.stats[2].stat.name)}: ${pokemon.stats[2].base_stat}</li>
-            <li class="list-group-item">${capitalize(pokemon.stats[3].stat.name)}: ${pokemon.stats[3].base_stat}</li>
-            <li class="list-group-item">${capitalize(pokemon.stats[4].stat.name)}: ${pokemon.stats[4].base_stat}</li>
-            <li class="list-group-item">${capitalize(pokemon.stats[5].stat.name)}: ${pokemon.stats[5].base_stat}</li>
+            <li class="list-group-item">${capitalize(pokemon.stats[0].name)}: ${pokemon.stats[0].value}</li>
+            <li class="list-group-item">${capitalize(pokemon.stats[1].name)}: ${pokemon.stats[1].value}</li>
+            <li class="list-group-item">${capitalize(pokemon.stats[2].name)}: ${pokemon.stats[2].value}</li>
+            <li class="list-group-item">${capitalize(pokemon.stats[3].name)}: ${pokemon.stats[3].value}</li>
+            <li class="list-group-item">${capitalize(pokemon.stats[4].name)}: ${pokemon.stats[4].value}</li>
+            <li class="list-group-item">${capitalize(pokemon.stats[5].name)}: ${pokemon.stats[5].value}</li>
             <li class="list-group-item">Base Experience: ${pokemon.baseExperience}</li>
           </ul>
         </ul>

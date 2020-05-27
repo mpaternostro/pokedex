@@ -11,9 +11,9 @@ export function loadTable(pokemonList) {
         <td class="pokemon-sprite text-center p-0"><img src="${pokemon.sprite}" alt="table-sprite"/></td>
         <th scope="row" class="pokemon-id" data-id="${pokemon.id}">${pokemon.id}</th>
         <td class="pokemon-name" data-pokemon-name="${pokemon.name}">${capitalize(pokemon.name)}</td>
-        <td class="pokemon-hp">${pokemon.stats[5].base_stat}</td>
-        <td class="pokemon-atk">${pokemon.stats[4].base_stat}</td>
-        <td class="pokemon-def">${pokemon.stats[3].base_stat}</td>
+        <td class="pokemon-hp">${pokemon.stats[5].value}</td>
+        <td class="pokemon-atk">${pokemon.stats[4].value}</td>
+        <td class="pokemon-def">${pokemon.stats[3].value}</td>
       </tr>`;
     everyRow = (everyRow ? everyRow += row : row);
   });
