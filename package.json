@@ -6,7 +6,9 @@
   "scripts": {
     "test": "jest --collect-coverage",
     "test:dev": "jest --watch",
-    "cy:open": "npx cypress open"
+    "server": "npx http-server -c-1",
+    "cy:open": "npx cypress open",
+    "cy:test": "run-p server cy:open"
   },
   "repository": {
     "type": "git",
@@ -32,6 +34,7 @@
     "eslint-plugin-cypress": "^2.10.3",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^23.8.2",
-    "jest": "^25.3.0"
+    "jest": "^25.3.0",
+    "npm-run-all": "^4.1.5"
   }
 }
