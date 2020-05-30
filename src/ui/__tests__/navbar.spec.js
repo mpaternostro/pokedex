@@ -3,7 +3,7 @@
 
 import handleNavbarButtons from '../navbar.js';
 
-jest.mock('../../storage/pokemon.js', () => ({
+jest.mock('../../services/pokemon.js', () => ({
   __esModule: true,
   getPokemon: jest.fn((pokemonName) => `{ id: 4, name: ${pokemonName}, height: 8 }`),
   getRandomPokemon: jest.fn(() => '{ id: 25, name: pikachu, height: 6 }'),
