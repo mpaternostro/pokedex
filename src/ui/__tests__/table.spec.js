@@ -1,7 +1,7 @@
 // eslint-disable-next-line spaced-comment
 /// <reference types="Jest" />
 
-import { loadTable, loadPokedexFromTable } from '../table.js';
+import { loadTable } from '../table.js';
 import tableHTML from './table.fixture.js';
 import pokemons from './pokemons.fixture.js';
 
@@ -29,6 +29,6 @@ describe('load table', () => {
   const $table = document.querySelector('#pokemon-table');
 
   test('load table from pokemonList', () => {
-    expect(deleteWhitespaces($table.innerHTML)).toMatch(deleteWhitespaces(tableHTML));
+    expect(deleteWhitespaces($table.innerHTML)).toEqual(deleteWhitespaces(tableHTML));
   });
 });
