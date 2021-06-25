@@ -20,6 +20,7 @@
         "sourceType": "module"
     },
     "rules": {
+        "@typescript-eslint/no-unused-vars": ["error"],
         "import/extensions": ["warn", {"js": "always", "json": "always"}]
     },
     "settings": {
@@ -28,8 +29,8 @@
         }
     },
     "plugins": [
-        "@typescript-eslint",
         "cypress",
-        "jest"
+        "jest",
+        "@typescript-eslint"
     ]
 }
