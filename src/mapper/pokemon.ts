@@ -1,6 +1,7 @@
+import { PokemonData } from '../shared/interfaces/PokemonData.js';
 import Pokemon from '../entities/Pokemon.js';
 
-export default function mapPokemon(pokemonData) {
+export default function mapPokemon(pokemonData: PokemonData) {
   const {
     id, name, height, weight, types, stats,
   } = pokemonData;

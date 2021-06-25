@@ -1,10 +1,12 @@
-export function capitalize(string) { return string.charAt(0).toUpperCase() + string.slice(1); }
+export function capitalize(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
-export function checkValidPage(page) {
+export function checkValidPage(page: HTMLLIElement) {
   return !!((page.classList.contains('active') || page.classList.contains('disabled')));
 }
 
-export function waitImageLoad(URL) {
+export function waitImageLoad(URL: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.addEventListener('load', () => resolve(img));
@@ -14,7 +16,7 @@ export function waitImageLoad(URL) {
 }
 
 export function showSpinner() {
-  const $pokedex = document.querySelector('#pokedex');
+  const $pokedex = document.querySelector('#pokedex') as HTMLDivElement;
   const spinner = `
       <div class="d-flex justify-content-center align-items-center flex-grow-1" id="spinner">
         <div class="spinner-border" role="status">
@@ -24,12 +26,12 @@ export function showSpinner() {
   $pokedex.innerHTML = spinner;
 }
 
-export function toggleInputError(behavior) {
-  const $nameError = document.querySelector('#name-error');
+export function toggleInputError(behavior: 'show' | 'hide') {
+  const $nameError = document.querySelector('#name-error') as HTMLDivElement | null;
   if (!$nameError && behavior === 'hide') return;
   if ($nameError) $nameError.remove();
-  const $searchPokemon = document.querySelector('#search-pokemon');
-  const $searchInput = $searchPokemon.querySelector('input');
+  const $searchPokemon = document.querySelector('#search-pokemon') as HTMLFormElement;
+  const $searchInput = $searchPokemon.querySelector('input')!;
   if (behavior === 'hide') $searchInput.classList.remove('alert-danger');
   const error = `
       <div id="name-error" class="alert-danger form-control mr-2" role="alert">
