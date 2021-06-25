@@ -1,7 +1,9 @@
 import { checkValidPage } from '../utilities/utilities.js';
 
-function handleListenersPaginator(callbackFn = () => {}) {
-  const $pages = document.querySelectorAll('.page-item');
+type CallbackFunction = (pageNumber?: number) => void
+
+function handleListenersPaginator(callbackFn: CallbackFunction = () => {}) {
+  const $pages = document.querySelectorAll('.page-item') as NodeListOf<HTMLLIElement>;
   $pages.forEach((page) => {
     page.addEventListener('click', () => {
       if (checkValidPage(page)) return false;
@@ -11,8 +13,8 @@ function handleListenersPaginator(callbackFn = () => {}) {
   });
 }
 
-function updatePaginator(pageNumber) {
-  const $paginator = document.querySelector('#paginator');
+function updatePaginator(pageNumber: number) {
+  const $paginator = document.querySelector('#paginator')!;
   const lastPage = 81;
   let leftPage;
   let middlePage;
@@ -51,7 +53,7 @@ function updatePaginator(pageNumber) {
   $paginator.innerHTML = paginatorHTML;
 }
 
-function handlePaginator(pageNumber, callbackFn = () => {}) {
+function handlePaginator(pageNumber: number, callbackFn: CallbackFunction = () => {}) {
   updatePaginator(pageNumber);
   handleListenersPaginator(callbackFn);
 }

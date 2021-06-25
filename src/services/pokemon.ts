@@ -1,3 +1,4 @@
+import Pokemon from '../entities/Pokemon.js';
 import loadPokemonFromApi from '../api/api.js';
 import {
   loadPokemon as loadPokemonFromLocalStorage,
@@ -6,12 +7,12 @@ import {
 import mapPokemon from '../mapper/pokemon.js';
 import everyPokemonName from '../pokemon-names.js';
 
-export async function getPokemon(pokemonName) {
+export async function getPokemon(pokemonName: string) {
   if (!pokemonName) {
     throw new Error('A Pokemon name is mandatory in order to get Pokemon');
   }
 
-  let pokemon;
+  let pokemon: Pokemon;
   try {
     pokemon = loadPokemonFromLocalStorage(pokemonName);
   } catch (e) {
@@ -36,14 +37,14 @@ export async function getRandomPokemon() {
   return randomPokemon;
 }
 
-function createArrayPokemonNames(currentPage) {
+function createArrayPokemonNames(currentPage: number) {
   const firstID = (currentPage - 1) * 10;
   const pokemonNames = [];
   for (let i = firstID; i < firstID + 10; i += 1) pokemonNames.push(everyPokemonName[i]);
   return pokemonNames;
 }
 
-export async function getPokemons(pageNumber) {
+export async function getPokemons(pageNumber: number) {
   const pokemonsNames = createArrayPokemonNames(pageNumber);
   const pokemons = pokemonsNames.map(async (pokemon) => {
     const pokemonData = await getPokemon(pokemon);

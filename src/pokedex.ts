@@ -4,8 +4,9 @@ import loadPokedex from './ui/pokedex.js';
 import { loadTable, loadPokedexFromTable } from './ui/table.js';
 import handlePaginator from './ui/paginator.js';
 import handleNavbarButtons from './ui/navbar.js';
+import Pokemon from './entities/Pokemon.js';
 
-async function handlePokedex(pokemon) {
+async function handlePokedex(pokemon: Pokemon) {
   loadPokedex(pokemon);
 }
 

@@ -1,11 +1,12 @@
+import Pokemon from '../entities/Pokemon.js';
 import { capitalize, waitImageLoad } from '../utilities/utilities.js';
 
-async function loadPokedex(pokemon) {
+async function loadPokedex(pokemon: Pokemon) {
   const image = await waitImageLoad(`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`)
     .catch((error) => {
-      throw new Error('COULD NOT GET POKEMON PICTURE', error);
+      throw new Error(`COULD NOT GET POKEMON PICTURE: ${error}`);
     });
-  const pokedex = document.querySelector('#pokedex');
+  const pokedex = document.querySelector('#pokedex') as HTMLDivElement;
   const typeOne = pokemon.types[0].type.name;
   let typeTwo;
   if (pokemon.types[1]) typeTwo = pokemon.types[1].type.name;

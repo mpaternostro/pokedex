@@ -1,14 +1,17 @@
+import Pokemon from '../entities/Pokemon.js';
 import { showSpinner, toggleInputError } from '../utilities/utilities.js';
 import { getRandomPokemon, getPokemon } from '../services/pokemon.js';
 import { checkCurrentPokemon, checkValidPokemon } from '../utilities/check-input.js';
 
 function HomeBtn() {
-  const $homeButton = document.querySelector('#home-button');
+  const $homeButton = document.querySelector('#home-button') as HTMLAnchorElement;
   $homeButton.addEventListener('click', () => window.location.reload());
 }
 
-function randomBtn(callbackPokemonSelector) {
-  const $randomButton = document.querySelector('#random-button');
+type CallbackFunction = (pokemon: Pokemon) => void;
+
+function randomBtn(callbackPokemonSelector: CallbackFunction) {
+  const $randomButton = document.querySelector('#random-button') as HTMLAnchorElement;
   $randomButton.addEventListener('click', async () => {
     showSpinner();
     const randomPokemon = await getRandomPokemon();
@@ -16,9 +19,9 @@ function randomBtn(callbackPokemonSelector) {
   });
 }
 
-function searchBtn(callbackPokemonSelector) {
-  const $searchInput = document.querySelector('#search-pokemon input');
-  const $searchButton = document.querySelector('#search-pokemon button');
+function searchBtn(callbackPokemonSelector: CallbackFunction) {
+  const $searchInput = document.querySelector('#search-pokemon input') as HTMLInputElement;
+  const $searchButton = document.querySelector('#search-pokemon button') as HTMLButtonElement;
   $searchButton.addEventListener('click', async (valorEvento) => {
     valorEvento.preventDefault();
     toggleInputError('hide');
@@ -34,7 +37,7 @@ function searchBtn(callbackPokemonSelector) {
   });
 }
 
-function handleNavbarButtons(callbackPokemonSelector) {
+function handleNavbarButtons(callbackPokemonSelector: CallbackFunction) {
   HomeBtn();
   randomBtn(callbackPokemonSelector);
   searchBtn(callbackPokemonSelector);
